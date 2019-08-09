@@ -1,0 +1,74 @@
+@font-face {
+    font-family: 'gohufontuni-14';
+    src: url('../gohufont-uni-14.woff2') format('woff2'),
+         url('../gohufont-uni-14.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+	box-sizing:border-box;
+}
+
+html, body {
+	margin:0;
+	padding:0;
+}
+
+body {
+	width:1920px;
+	height:1080px;
+	overflow:hidden;
+	background:black;
+	color:white;
+	font:36px gohufontuni-14,monospace;
+	font-weight:bold;
+	text-shadow:0.2em 0px 0px black;
+	letter-spacing:0.05em;
+}
+
+.hline, .vline {
+	background:#00f9b0;
+	box-shadow:0px 0px 35px rgba(0, 0, 0, 0.7);
+}
+
+.hline {
+	height:3px;
+}
+
+.vline {
+	width:3px;
+}
+
+.textgrad {
+	background: linear-gradient(to right, #00ff78, #00ffc6);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.sponsors > * {
+	max-height:90px;
+	max-width:340px;
+	vertical-align:middle;
+}
+
+.center {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+.logo, .teamlogo {
+	filter:drop-shadow(0px 0px 16px black);
+	-webkit-filter:drop-shadow(0px 0px 16px black);
+}
+
+.url {
+	font-size:30px;
+	font-style:italic;
+	font-weight:0;
+	letter-spacing:0.25em;
+	position:absolute;
+	bottom:110px;
+	width:100%;
+}
