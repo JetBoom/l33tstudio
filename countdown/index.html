@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" />
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
 
-	<link rel="stylesheet" href="/static/base.css?2" />
+	<link rel="stylesheet" href="/static/base.css?4" />
 	<script src="/static/js/base.js" type="text/javascript"></script>
 
 	<script src="/static/js/teams.js" type="text/javascript"></script>
@@ -34,7 +34,7 @@
 }
 
 .bg2 {
-	background:url("/static/img/stream/bg2.png");
+	background:url("/static/img/stream/bg2new.png");
 }
 
 #cycle {
@@ -173,6 +173,85 @@
 	animation-delay:0.25s;
 }
 
+#links {
+	position:absolute;
+	right:300px;
+	top:425px;
+	text-shadow:4px 0px black;
+	font-size:36px;
+	letter-spacing:4px;
+}
+
+#links > *, #maintext, #subtext {
+	animation:10s zoomin ease-in-out infinite;
+}
+
+#maintext				{animation-delay:0s;}
+#subtext				{animation-delay:0.25s;}
+#links > *:nth-child(1) {animation-delay:0.5s;}
+#links > *:nth-child(2) {animation-delay:0.75s;}
+#links > *:nth-child(3) {animation-delay:1.0s;}
+#links > *:nth-child(4) {animation-delay:1.25s;}
+#links > *:nth-child(5) {animation-delay:1.5s;}
+
+#links > *:not(:first-child) {
+	margin-top:0.5em;
+}
+
+#links > *::before {
+    content: "";
+    display: inline-block;
+    border-radius: 8px;
+    background: black;
+    width: 2em;
+    height: 2em;
+    vertical-align: middle;
+    margin-right: 0.5em;
+	background-size:80%;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+#links .web::before {
+	background-image:url("/static/img/iconweb.png");
+}
+
+#links .twitter::before {
+	background-image:url("/static/img/icontwitter.png");
+}
+
+#tips {
+	position:absolute;
+	transform:rotateX(0deg);
+	transition: transform 2s linear;
+	bottom: 0;
+	right: 780px;
+	font-size: 28px;
+	text-shadow: 3px 0px black;
+	font-weight: bold;
+	letter-spacing: 0px;
+	text-align: center;
+	width: 300px;
+	transform-origin: bottom;
+}
+
+#tips.flip {
+	transform:rotateX(360deg);
+}
+
+#seplight {
+	position:absolute;
+	top:0px;
+	left:1085px;
+	animation: 5s seplight linear infinite;
+	width: 65px;
+	height: 12px;
+	border-radius: 4px;
+	background: linear-gradient(to right, #f00, #f000);
+	transform: translateX(-50%) translateY(-50%) rotate(-60deg);
+	filter:drop-shadow(0px 0px 8px red) blur(2px);
+}
+
 @keyframes cycle {
 	0% {
 		left:0px;
@@ -217,6 +296,51 @@
 		color:red;
 	}
 }
+
+@keyframes zoomin {
+	0% {
+		transform:scale(1) skew(0deg) rotateX(0deg);
+		filter:drop-shadow(0px 0px 0px black);
+	}
+	10% {
+		transform:scale(1.25) skew(10deg) rotateX(30deg);
+		filter:drop-shadow(0px -0.1em 2px #000a) drop-shadow(0px -0.1em 8px #000a);
+	}
+	20% {
+		transform:scale(1) skew(0deg) rotateX(0deg);
+		filter:drop-shadow(0px 0px 0px black);
+	}
+}
+
+@keyframes seplight {
+	0% {
+		opacity:0;
+	}
+
+	10% {
+		opacity:1;
+	}
+
+	40% {
+		opacity:1;
+	}
+
+	50% {
+		opacity:0;
+		top:1080px;
+		left:500px;
+	}
+
+	80% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity:0;
+		top:1080px;
+		left:500px;
+	}
+}
 	</style>
 </head>
 
@@ -226,11 +350,9 @@
 	<source src="/static/csgoflythru.webm" type="video/webm" />
 </video>
 
-<div id="cycle">
-	<div id="bgmatch">
-	</div>
-	<div id="bgsponsors">
-	</div>
+<div id="cycle" style="display:none">
+	<div id="bgmatch"></div>
+	<div id="bgsponsors"></div>
 </div>
 
 <div class="bg1"></div>
@@ -241,6 +363,13 @@
 <div id="maintext" class="edit_text"></div>
 <div id="subtext" class="edit_text"></div>
 
+<div id="links">
+	<div class="web">//l33t.studio</div>
+	<div class="twitter">@l33tstudio</div>
+</div>
+
+<div id="tips"></div>
+
 <!--<div class="sponsors">
 </div>-->
 
@@ -250,6 +379,8 @@
 
 <div id="countdown"></div>
 
+<!-- <div id="seplight"></div> -->
+
 
 <!--<img src="img/teams/sj.svg" class="teamlogo vslogo" id="vslogo1">
 <img src="img/teams/sj.svg" class="teamlogo vslogo" id="vslogo2">-->
@@ -258,6 +389,28 @@
 <img src="/static/img/stream/head2.png" class="head" id="head2">
 
 <script>
+let TipID = 0
+
+const tips = [
+	'Overlays provided by overman.dev',
+	'!caster shows our current caster',
+	'Follow our Twitter @l33tstudio',
+	'!match shows the current or upcoming match',
+	'Visit our website at l33t.studio',
+	'!song shows current music'
+]
+
+setInterval(() => {
+	if (!tips[TipID])
+		TipID = 0
+
+	$('#tips').toggleClass('flip', TipID % 2 == 0)
+
+	const tip = tips[TipID++]
+
+	setTimeout(() => $('#tips').text(tip), 500)
+}, 10000)
+
 var timeCD
 
 function updateCountDown() {
