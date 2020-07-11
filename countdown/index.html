@@ -252,6 +252,17 @@
 	filter:drop-shadow(0px 0px 8px red) blur(2px);
 }
 
+#tvimage {
+	position: absolute;
+	bottom: 40px;
+	right: 482px;
+	width: 120px;
+	height: 67px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
 @keyframes cycle {
 	0% {
 		left:0px;
@@ -388,6 +399,8 @@
 <img src="/static/img/stream/head1.png" class="head" id="head1">
 <img src="/static/img/stream/head2.png" class="head" id="head2">
 
+<div id="tvimage" style="background-image:url(/static/img/cyberpro_emblem.png);"></div>
+
 <script>
 let TipID = 0
 
@@ -396,8 +409,9 @@ const tips = [
 	'!caster shows our current caster',
 	'Follow our Twitter @l33tstudio',
 	'!match shows the current or upcoming match',
+	'BUFF.bet - Use code "PRO" for 100% deposit bonus',
 	'Visit our website at l33t.studio',
-	'!song shows current music'
+	//'!song shows current music',
 ]
 
 setInterval(() => {
