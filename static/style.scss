@@ -292,6 +292,19 @@ p {
 	top:2rem;
 }
 
+#social {
+	display: flex;
+	flex-direction: column;
+	font-size: 150%;
+	position: fixed;
+	top: 3rem;
+	right: 1rem;
+}
+
+#social > * {
+	margin-bottom: 1.5rem;
+}
+
 .copy {
 	transform:rotate(90deg);
 	transform-origin: left;
