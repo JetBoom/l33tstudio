@@ -1,3 +1,5 @@
+@use "sass:color";
+
 @mixin transition($transition...) {
 	-moz-transition:	$transition;
 	-o-transition:	 $transition;
@@ -35,8 +37,8 @@
 
 @font-face {
     font-family: 'gohufontuni-14';
-    src: url('/static/gohufont-uni-14.woff2') format('woff2'),
-         url('/static/gohufont-uni-14.woff') format('woff');
+    src: url('/gohufont-uni-14.woff2') format('woff2'),
+         url('/gohufont-uni-14.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -51,9 +53,8 @@ html {
 }
 
 body {
-	width:100%;
-	height:100%;
-	overflow-x:hidden;
+	height: 100vh;
+	overflow-x: hidden;
 	background-color:#211;
 	background-image:linear-gradient(130deg, black, #622);
 	background-attachment: fixed;
@@ -76,35 +77,47 @@ header, footer {
 	position:fixed;
 }
 
+a {
+	transition: 0.3s ease color;
+}
+
+a, a:active, a:focus {
+	color:red*0.9;
+	text-decoration:none;
+}
+a:hover {color:red;text-decoration:none;}
+
 header {
-	top:0px;
-	left:0px;
-	width:100%;
-	display:flex;
-	justify-content: center;
-	flex-wrap:wrap;
-	align-items:center;
-	font-size:100%;
-	padding:1rem 0px;
+	top: 0px;
+	left: 0px;
+	width: 100vw;
+	font-size: 100%;
+	padding: 1rem 0px;
 	background:linear-gradient(to right, transparent 25%, rgba(0, 0, 0, 0.5) 50%, transparent 75%);
-}
 
-header * {
-	vertical-align: middle;
-}
+	> nav {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		align-items: center;
 
-header a {
-	color:white;
-	margin:0 0.5em;
-}
+		> a {
+			color:white;
+			margin:0 0.5em;
+		}
 
-header a:hover, header > nav > a.active {
-	//color:white;
-}
+		> a:hover, > a.active {
+			//color:white;
+		}
 
-header a.active {
-	border-bottom:2px solid white;
-	//box-shadow:0 -7px 0 -5px white inset;
+		> a.active {
+			border-bottom: 2px solid white;
+		}
+	}
+
+	* {
+		vertical-align: middle;
+	}
 }
 
 footer {
@@ -116,16 +129,9 @@ footer {
 }
 
 main {
-	width:100%;
-	height:100%;
-	position:absolute;
+	width:100vw;
+	min-height:100vh;
 }
-
-a, a:active, a:focus {
-	color:red*0.9;
-	text-decoration:none;
-}
-a:hover {color:red;text-decoration:none;}
 
 h1 {
 	margin:0;
@@ -164,24 +170,31 @@ h1, h2 {
 	text-align: center;
 }
 
-section {
-	width:100%;
-	height:100%;
-	margin:0 auto;
-	padding:1rem 32rem;
+main > section {
+	width: 50%;
+	min-height: 100vh;
+	margin: 0 auto;
+	padding: 1rem;
 
-	display:flex;
+	display: flex;
 	justify-content: center;
-	align-items:center;
+	align-items: center;
 	flex-direction: column;
+
+	&:first-of-type {
+		padding-top: 3.5rem;
+		padding-bottom: 3.5rem;
+	}
 }
 
-p {
+p, .p {
 	white-space: pre-line;
 	max-width:50em;
 	margin:0 auto;
 	padding:0.5em 0;
 	background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.5), transparent);
+	line-height: 1.5;
+	letter-spacing: 1px;
 }
 
 .team {
@@ -261,17 +274,17 @@ p {
 	border-radius:0px 2rem 2rem 0px;
 }
 
-.contentsplit > p:first-child {
+.contentsplit > p:first-child, .contentsplit > .p:first-child {
 	background: linear-gradient(to left, rgba(0, 0, 0, 0.5), transparent);
 	padding-right:0.5em;
 }
 
-.contentsplit > p:last-child {
+.contentsplit > p:last-child, .contentsplit > .p:last-child {
 	background: linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent);
 	padding-left:0.5em;
 }
 
-.contentsplit > *:not(p) {
+.contentsplit > *:not(p), .contentsplit > *:not(.p) {
 	max-width:40%;
 }
 
@@ -286,10 +299,10 @@ p {
 }
 
 #logo {
-	height:3rem;
-	position:fixed;
-	left:1rem;
-	top:2rem;
+	height: 3rem;
+	position: fixed;
+	left: 1rem;
+	top: 4rem;
 }
 
 #social {
@@ -297,12 +310,20 @@ p {
 	flex-direction: column;
 	font-size: 150%;
 	position: fixed;
-	top: 3rem;
+	top: 4rem;
 	right: 1rem;
 }
 
 #social > * {
 	margin-bottom: 1.5rem;
+}
+
+#social > a {
+	color: white;
+
+	&:hover {
+		color: red;
+	}
 }
 
 .copy {
@@ -352,39 +373,52 @@ body .scrollbar-inner>.scroll-element .scroll-element_track, body ::-webkit-scro
 
 @media only screen and (max-width: 1600px) {
 	main > section {
-		padding:0.5rem 14rem;
+		width: 60%;
 	}
 }
 
 @media only screen and (max-width: 1100px) {
 	main > section {
-		padding:1rem 10rem;
+		width: 75%;
 	}
 }
 
 @media only screen and (max-width: 900px) {
 	main {
-		padding:0 1rem;
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+
+		> section {
+			width: 80%;
+		}
 	}
 
 	body {
-		font-size:14px;
-		text-shadow:2px 0px 1px black;
+		font-size: 14px;
+		text-shadow: 2px 0px 1px black;
 	}
 }
 
 @media only screen and (max-width: 720px) {
 	main {
-		padding:0 1rem;
-	}
+		padding: 0 1rem;
 
-	main > section {
-		padding:0.5rem 7rem;
+		> section {
+			width: 95%;
+			padding-top: 0.5rem;
+			padding-bottom: 0.5rem;
+		}
 	}
 }
 
 @media only screen and (max-width: 590px) {
-	.contentsplit > p {
+	main {
+		> section {
+			width: 100%;
+		}
+	}
+
+	.contentsplit > p, .contentsplit > .p {
 		background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.5), transparent)!important;
 		text-align:left!important;
 	}
@@ -393,16 +427,10 @@ body .scrollbar-inner>.scroll-element .scroll-element_track, body ::-webkit-scro
 		flex-basis:100%;
 	}
 
-	.contentsplit > *:not(p) {
+	.contentsplit > *:not(p), .contentsplit > *:not(.p) {
 		max-width:100%!important;
 		border-radius:0.5rem!important;
 		box-shadow:0px 0px 0px transparent!important;
-	}
-}
-
-@media only screen and (max-width: 480px) {
-	main > section {
-		padding:0.25rem 5rem;
 	}
 }
 
@@ -411,7 +439,7 @@ body .scrollbar-inner>.scroll-element .scroll-element_track, body ::-webkit-scro
 	width:10.1vw;
 	height:5.5vw;
 	margin:1vw 0;
-	background-image:url(/static/img/pixel_desk.png);
+	background-image:url("/img/pixel_desk.png");
 	background-size:cover;
 	@include filter(drop-shadow(0px 0px 1vw rgba(255, 0, 0, 0.4)));
 }
@@ -428,12 +456,12 @@ body .scrollbar-inner>.scroll-element .scroll-element_track, body ::-webkit-scro
 
 .pixel_desk > *:first-child {
 	left:10%;
-	background-image:url(/static/img/stream/head1.png);
+	background-image:url("/img/stream/head1.png");
 }
 
 .pixel_desk > *:last-child {
 	right:10%;
-	background-image:url(/static/img/stream/head2.png);
+	background-image:url("/img/stream/head2.png");
 	animation-delay: 0.25s;
 }
 

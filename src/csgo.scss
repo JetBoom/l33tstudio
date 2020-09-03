@@ -1,0 +1,322 @@
+$cyberpro-primary: #fff83f;
+$cyberpro-primary-dark: #ffc810;
+$cyberpro-bg: #141313;
+
+@function legacy-direction($value) {
+  @if is-direction($value) == false {
+    @error "Cannot convert `#{$value}` to legacy syntax because it doesn't seem to be a direction.";
+  }
+
+  $conversion-map: (
+    to top          : bottom,
+    to top right    : bottom left,
+    to right top    : left bottom,
+    to right        : left,
+    to bottom right : top left,
+    to right bottom : left top,
+    to bottom       : top,
+    to bottom left  : top right,
+    to left bottom  : right top,
+    to left         : right,
+    to left top     : right bottom,
+    to top left     : bottom right
+  );
+
+  @if map-has-key($conversion-map, $value) {
+    @return map-get($conversion-map, $value);
+  }
+
+  @return 90deg - $value;
+}
+
+$background-gradient-1: transparent 80%, $cyberpro-primary-dark 80%, $cyberpro-primary-dark 81%, transparent 81%, transparent 82%, $cyberpro-primary-dark 82%;
+$background-gradient-2: transparent 80%, $cyberpro-primary-dark 80%, $cyberpro-primary-dark 81%, transparent 81%, transparent 82%, $cyberpro-primary-dark 82%;
+
+body.csgo {
+	background-color: $cyberpro-bg;
+	background-image: linear-gradient(-60deg, $background-gradient-1),
+		linear-gradient(-240deg, $background-gradient-2);
+	background-image: -webkit-linear-gradient(legacy-direction(-60deg), $background-gradient-1),
+		-webkit-linear-gradient(legacy-direction(-240deg), $background-gradient-2);
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+
+	a {
+		color: $cyberpro-primary;
+
+		&:hover {
+			color: $cyberpro-primary*1.1;
+			text-decoration: underline;
+		}
+	}
+
+	header {
+		background: transparent;
+
+		nav {
+			display: none;
+		}
+	}
+
+	#logo {
+		filter: drop-shadow(0px 0px 0.25rem black);
+		top: 0.5rem;
+	}
+
+	#social {
+		flex-direction: row;
+		font-size: 21px;
+		top: 3.75rem;
+		right: unset;
+		left: 0.5rem;
+		background: $cyberpro-bg;
+		padding: 0.25rem;
+		border-radius: 0.5rem;
+
+		a {
+			margin: 0 0.25rem;
+			color: $cyberpro-primary-dark;
+			text-shadow: 0px 0px 0px transparent;
+			transition: 0.3s all ease;
+
+			&:hover {
+				color: white;
+			}
+		}
+	}
+
+	h1 {
+		color: $cyberpro-primary;
+		text-shadow: 3px 3px 0px black;
+
+		&::after {
+			background: linear-gradient(to right, transparent, $cyberpro-primary, white, $cyberpro-primary, transparent);
+			height: 2px;
+			width: 0;
+			min-width: 40rem;
+			max-width: 50vw;
+		}
+	}
+
+	.rules {
+		display: flex;
+		flex-direction: column;
+		background: black;
+		padding: 1rem;
+		width: 35rem;
+		max-width: 95vw;
+		min-height: 30rem;
+		max-height: 40rem;
+		overflow-y: auto;
+		border: 2px solid $cyberpro-primary-dark;
+		line-height: 1.25;
+
+		h2 {
+			font-size: 120%;
+			text-decoration: underline;
+			margin: 0;
+			text-align: left;
+
+			&::after {
+				display: none;
+			}
+		}
+
+		h2:not(:first-child) {
+			margin-top: 1em;
+		}
+
+		ul, ol {
+			margin: 0;
+		}
+
+		ul {
+			padding-inline-start: 1em;
+		}
+	}
+
+	::-webkit-scrollbar-track {
+		background:#050505;
+	}
+
+	.scrollbar-inner>.scroll-element .scroll-element_track, ::-webkit-scrollbar-track {
+		background:transparent;
+	}
+
+	.scrollbar-inner>.scroll-element .scroll-bar, ::-webkit-scrollbar-thumb {
+		//border-radius:10px;
+		background:$cyberpro-primary-dark*0.9;
+		//box-shadow:inset 0 0 3px rgba(0, 0, 0, 0.5);
+	}
+
+	.scrollbar-inner>.scroll-element .scroll-bar:hover, ::-webkit-scrollbar-thumb:hover {
+		background:$cyberpro-primary-dark*0.95;
+	}
+
+	.scrollbar-inner>.scroll-element .scroll-bar:active, ::-webkit-scrollbar-thumb:active {
+		background:$cyberpro-primary-dark;
+	}
+}
+
+.cyberpro-logo {
+	max-width: 14rem;
+	filter: drop-shadow(0px 0px 0.5rem $cyberpro-primary);
+}
+
+#csgo-menu {
+	> div:first-child {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+
+		> div:first-child, > div:last-child {
+			min-width: 12rem;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
+			justify-content: space-between;
+		}
+
+		> div:nth-child(2) {
+			min-width: 14rem;
+			margin: 0 1rem;
+		}
+	}
+
+	> div:last-child {
+		margin-top: 2rem;
+		text-align: center;
+
+		> .-title {
+			font-size: 300%;
+			letter-spacing: 0.2em;
+			color: $cyberpro-primary;
+			opacity: 1;
+			transform: scale(1);
+			transition: 1s all ease;
+			transition-delay: 0.25s;
+		}
+
+		> .-series, > .-tagline {
+			opacity: 1;
+			transition: 1s opacity ease;
+		}
+
+		> .-series {
+			font-size: 150%;
+			margin-bottom: 0.5em;
+			transition-delay: 1.5s;
+		}
+
+		> .-tagline {
+			transition-delay: 2.5s;
+		}
+	}
+}
+
+@media only screen and (max-width: 720px) {
+	#csgo-menu {
+		> div:first-child {
+			flex-direction: column;
+		}
+	}
+}
+
+#csgo-menu.notinview {
+	> div:last-child {
+		> .-title {
+			opacity: 0;
+			transform: scale(2);
+			letter-spacing: 1em;
+		}
+
+		> .-series, > .-tagline {
+			opacity: 0;
+		}
+	}
+}
+
+.csgo-button {
+	background: #111;
+	padding: 0.5em 1em;
+	margin: 0.33rem 0;
+	border: 2px solid currentColor;
+	text-shadow: 0px 0px 0px;
+	font-size: 125%;
+	box-shadow: 0px 0px 0.5rem #000a;
+	letter-spacing: 0.1em;
+	//font-weight: normal;
+	transition: 0.2s ease all;
+	color: $cyberpro-primary!important;
+	text-decoration: none!important;
+
+	&:hover {
+		background: $cyberpro-primary;
+		text-shadow: 0px 0px 0.2em black;
+		color: white!important;
+		box-shadow: 0px 0px 1rem $cyberpro-primary;
+		//border-radius: 1rem!important;
+		border-color: transparent;
+	}
+}
+
+#csgo-menu {
+	div:first-child > .csgo-button {
+		border-radius: 0 0.5rem;
+	}
+
+	div:last-child > .csgo-button {
+		border-radius: 0.5rem 0;
+	}
+}
+
+#format {
+	> div {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+
+		ul {
+			padding-inline-start: 0.5em;
+			margin: 0;
+		}
+
+		> div {
+			width: 20rem;
+			min-height: 12rem;
+			margin: 1rem;
+			display: flex;
+			flex-direction: column;
+			box-shadow: 0px 0px 0.5rem black;
+
+			> div:first-child {
+				background: $cyberpro-primary-dark;
+				letter-spacing: 0.25em;
+				font-weight: bold;
+				font-size: 125%;
+				color: black;
+				padding: 0.5rem 0.25rem;
+				text-shadow: 0px 0px 0px transparent;
+				text-align: center;
+				white-space: nowrap;
+			}
+
+			> div:last-child {
+				background: black;
+				border: 2px solid $cyberpro-primary-dark;
+				padding: 1rem;
+				font-size: 90%;
+				flex-grow: 1;
+
+				> div {
+					text-align: center;
+					margin-bottom: 1.5rem;
+					font-size: 21px;
+					font-weight: normal;
+				}
+			}
+		}
+	}
+}
