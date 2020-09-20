@@ -1,34 +1,8 @@
+@use "inc/legacy-direction" as *;
+
 $cyberpro-primary: #fff83f;
 $cyberpro-primary-dark: #ffc810;
 $cyberpro-bg: #141313;
-
-@function legacy-direction($value) {
-  @if is-direction($value) == false {
-    @error "Cannot convert `#{$value}` to legacy syntax because it doesn't seem to be a direction.";
-  }
-
-  $conversion-map: (
-    to top          : bottom,
-    to top right    : bottom left,
-    to right top    : left bottom,
-    to right        : left,
-    to bottom right : top left,
-    to right bottom : left top,
-    to bottom       : top,
-    to bottom left  : top right,
-    to left bottom  : right top,
-    to left         : right,
-    to left top     : right bottom,
-    to top left     : bottom right
-  );
-
-  @if map-has-key($conversion-map, $value) {
-    @return map-get($conversion-map, $value);
-  }
-
-  @return 90deg - $value;
-}
-
 $background-gradient-1: transparent 80%, $cyberpro-primary-dark 80%, $cyberpro-primary-dark 81%, transparent 81%, transparent 82%, $cyberpro-primary-dark 82%;
 $background-gradient-2: transparent 80%, $cyberpro-primary-dark 80%, $cyberpro-primary-dark 81%, transparent 81%, transparent 82%, $cyberpro-primary-dark 82%;
 
@@ -41,6 +15,8 @@ body.csgo {
 	background-size: contain;
 	background-position: center;
 	background-repeat: no-repeat;
+	font-family: tahoma,sans-serif;
+	font-weight: normal;
 
 	a {
 		color: $cyberpro-primary;
@@ -86,6 +62,124 @@ body.csgo {
 		}
 	}
 
+	#about {
+		> div {
+			display: flex;
+			flex-direction: column;
+			/*flex-wrap: wrap;*/
+			justify-content: center;
+			align-items: center;
+
+			> * {
+				margin: 1rem;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				text-align: center;
+
+				> div:first-child {
+					font-size: 120%;
+					font-weight: bold;
+					margin-bottom: 0.5rem;
+				}
+			}
+		}
+
+		.-teamList {
+			display: flex;
+			flex-wrap: wrap;
+			max-width: 24rem;
+
+			> * {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin: 0.5rem;
+				width: 5rem;
+				height: 5rem;
+				outline: 1px solid $cyberpro-primary-dark;
+				font-size: 125%;
+				background-color: #111;
+
+				&:nth-child(2n) {
+					background-color: #151515;
+				}
+
+				&:nth-child(3n) {
+					background-color: #222;
+				}
+			}
+		}
+	}
+
+	#schedule {
+		// Match
+		> div {
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			font-size: 80%;
+
+			&:not(:last-child) {
+				margin-bottom: 1rem;
+			}
+
+			> .-time {
+				text-align: center;
+				padding-bottom: 0.5rem;
+				background-color: $cyberpro-primary-dark;
+				padding: 0.5rem;
+				border-radius: 0.25rem 0.25rem 0 0;
+				text-shadow: 0px 0px 0px;
+				color: black;
+				font-weight: bold;
+				letter-spacing: 2px;
+			}
+
+			> .-info {
+				display: flex;
+				justify-content: center;
+				align-items: flex-start;
+				padding: 0.5rem;
+				background: #000;
+				border-radius: 0 0 0.25rem 0.25rem;
+				border: 1px solid $cyberpro-primary-dark;
+
+				> .-team {
+					display: flex;
+					align-items: center;
+
+					// Name
+					> *:first-child {
+						margin: 0 2rem;
+					}
+
+					// Logo
+					> img {
+						height: 4em;
+					}
+
+					// Score
+					> *:last-child {
+						font-size: 175%;
+						margin: 0 1rem;
+					}
+				}
+
+				// Team 1
+				> .-team:first-child {
+					margin-right: 1rem;
+				}
+
+				// Team 2
+				> .-team:last-child {
+					margin-left: 1rem;
+					flex-direction: row-reverse;
+				}
+			}
+		}
+	}
+
 	h1 {
 		color: $cyberpro-primary;
 		text-shadow: 3px 3px 0px black;
@@ -111,6 +205,7 @@ body.csgo {
 		overflow-y: auto;
 		border: 2px solid $cyberpro-primary-dark;
 		line-height: 1.25;
+		box-shadow: 0px 0px 0.5rem black;
 
 		h2 {
 			font-size: 120%;
@@ -281,6 +376,10 @@ body.csgo {
 		ul {
 			padding-inline-start: 0.5em;
 			margin: 0;
+
+			> li > ul {
+				font-size: 14px;
+			}
 		}
 
 		> div {

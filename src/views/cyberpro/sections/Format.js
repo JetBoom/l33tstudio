@@ -12,18 +12,27 @@ const Format = ({ enterCount, forwardedRef }) =>
 		<div>
 			<div>Group Stage</div>
 			<div>
-				<div>September 4th - 6th</div>
+				<div>Sept 28 - Oct 07</div>
 				<ul>
-					<li>GSL format</li>
+					<li>GSL format
+						<ul>
+							<li>All matches are BO1 excluding decider</li>
+							<li>Decider match is BO3</li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</div>
 		<div>
 			<div>Playoffs</div>
 			<div>
-				<div>September 8th - 10th</div>
+				<div>Oct 08 - Oct 12</div>
 				<ul>
-					<li>Single Elimination format</li>
+					<li>Single Elimination format
+						<ul>
+							<li>All matches are BO3 including the Grand Final</li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</div>

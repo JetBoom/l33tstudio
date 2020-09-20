@@ -6,7 +6,7 @@ import Format from './sections/Format'
 import Schedule from './sections/Schedule'
 import Brackets from './sections/Brackets'
 import Rules from './sections/Rules'
-import 'csgo.scss'
+import 'styles/csgo.scss'
 
 export default () => {
 	document.getElementById('top').className = document.body.className = 'csgo'

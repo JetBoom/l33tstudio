@@ -1,46 +1,17 @@
 @use "sass:color";
+@use "inc/mixins" as *;
 
-@mixin transition($transition...) {
-	-moz-transition:	$transition;
-	-o-transition:	 $transition;
-	-webkit-transition: $transition;
-	transition:         $transition;
-}
-@mixin transition-property($property...) {
-	-moz-transition-property:    $property;
-	-o-transition-property:      $property;
-	-webkit-transition-property: $property;
-	transition-property:         $property;
-}
-@mixin transition-duration($duration...) {
-	-moz-transition-property:    $duration;
-	-o-transition-property:      $duration;
-	-webkit-transition-property: $duration;
-	transition-property:         $duration;
-}
-@mixin transition-timing-function($timing...) {
-	-moz-transition-timing-function:    $timing;
-	-o-transition-timing-function:      $timing;
-	-webkit-transition-timing-function: $timing;
-	transition-timing-function:         $timing;
-}
-@mixin transition-delay($delay...) {
-	-moz-transition-delay:    $delay;
-	-o-transition-delay:      $delay;
-	-webkit-transition-delay: $delay;
-	transition-delay:         $delay;
-}
 @mixin filter($f...) {
-	-webkit-filter:      $f;
+	-webkit-filter: $f;
 	filter: $f;
 }
 
 @font-face {
-    font-family: 'gohufontuni-14';
-    src: url('/gohufont-uni-14.woff2') format('woff2'),
-         url('/gohufont-uni-14.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+		font-family: 'gohufontuni-14';
+		src: url('/gohufont-uni-14.woff2') format('woff2'),
+			 url('/gohufont-uni-14.woff') format('woff');
+		font-weight: normal;
+		font-style: normal;
 }
 
 * {box-sizing:border-box;}
@@ -117,6 +88,43 @@ header {
 
 	* {
 		vertical-align: middle;
+	}
+}
+
+#events {
+	.-eventlist {
+		display: flex;
+		justify-content: space-around;
+		flex-wrap: wrap;
+		align-items: center;
+
+		> * {
+			width: 18rem;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			margin: 1rem;
+			margin-top: 0;
+			padding: 1rem;
+			background-color: #fff1;
+			border-radius: 0.5rem;
+			box-shadow: 0.25rem 0.25rem 0.5rem #0006;
+
+			> img {
+				height: 8rem;
+				@include filter(drop-shadow(0px 0px 0.5rem black));
+			}
+
+			> div:last-child {
+				font-weight: bold;
+				font-size: 90%;
+
+				> a {
+					margin: 0 1rem;
+				}
+			}
+		}
 	}
 }
 
@@ -338,6 +346,7 @@ p, .p {
 #partners img {
 	min-height:3rem;
 	max-height:4rem;
+	filter: drop-shadow(0.2rem 0.1rem 0.5rem black);
 }
 
 ::-webkit-scrollbar {
