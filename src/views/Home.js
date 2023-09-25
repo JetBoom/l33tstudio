@@ -1,4 +1,3 @@
-import React from 'react'
 import About from './sections/About'
 import Contact from './sections/Contact'
 import Overlay from './sections/Overlay'
@@ -7,18 +6,20 @@ import Studio from './sections/Studio'
 import Team from './sections/Team'
 import Events from './sections/Events'
 
-export default () => <>
-	<About />
+export default function Home() {
+	return <>
+		<About />
 
-	<Studio />
+		<Studio />
 
-	<Overlay />
+		<Overlay />
 
-	<Team />
+		<Team />
 
-	<Contact />
+		<Contact />
 
-	<Events />
+		<Events />
 
-	<Partners />
-</>
+		<Partners />
+	</>
+}

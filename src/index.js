@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import { CookiesProvider } from 'react-cookie'
@@ -7,11 +6,11 @@ import 'styles/index.scss'
 import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render(
-	<BrowserRouter>
-		<CookiesProvider>
+	<CookiesProvider>
+		<BrowserRouter>
 			<App />
-		</CookiesProvider>
-	</BrowserRouter>,
+		</BrowserRouter>
+	</CookiesProvider>,
 	document.getElementById('top')
 )
 

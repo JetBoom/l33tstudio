@@ -1,4 +1,5 @@
 @use "inc/legacy-direction" as *;
+@use "sass:color";
 
 $cyberpro-primary: #fff83f;
 $cyberpro-primary-dark: #ffc810;
@@ -15,14 +16,12 @@ body.csgo {
 	background-size: contain;
 	background-position: center;
 	background-repeat: no-repeat;
-	font-family: tahoma,sans-serif;
-	font-weight: normal;
 
 	a {
 		color: $cyberpro-primary;
 
 		&:hover {
-			color: $cyberpro-primary*1.1;
+			color: color.scale($cyberpro-primary, $lightness: 10%);
 			text-decoration: underline;
 		}
 	}
@@ -100,6 +99,9 @@ body.csgo {
 				outline: 1px solid $cyberpro-primary-dark;
 				font-size: 125%;
 				background-color: #111;
+				background-size: 80%;
+				background-repeat: no-repeat;
+				background-position: center;
 
 				&:nth-child(2n) {
 					background-color: #151515;
@@ -113,68 +115,122 @@ body.csgo {
 	}
 
 	#schedule {
-		// Match
-		> div {
-			display: flex;
-			justify-content: center;
-			flex-direction: column;
-			font-size: 80%;
+		.-matches {
+			overflow-x: hidden;
+			overflow-y: auto;
+			max-height: 80vh;
+			padding: 1rem 2rem;
+			background-image: linear-gradient(to bottom, black, transparent);
+			border-radius: 1rem;
 
-			&:not(:last-child) {
-				margin-bottom: 1rem;
-			}
-
-			> .-time {
-				text-align: center;
-				padding-bottom: 0.5rem;
-				background-color: $cyberpro-primary-dark;
-				padding: 0.5rem;
-				border-radius: 0.25rem 0.25rem 0 0;
-				text-shadow: 0px 0px 0px;
-				color: black;
-				font-weight: bold;
-				letter-spacing: 2px;
-			}
-
-			> .-info {
+			// Match
+			> div {
 				display: flex;
 				justify-content: center;
-				align-items: flex-start;
-				padding: 0.5rem;
-				background: #000;
-				border-radius: 0 0 0.25rem 0.25rem;
+				flex-direction: column;
+				border-radius: 0.25rem;
 				border: 1px solid $cyberpro-primary-dark;
+				background-color: #000;
+				font-size: 80%;
 
-				> .-team {
+				&:not(:last-child) {
+					margin-bottom: 1rem;
+				}
+
+				> .-stage {
+					text-align: center;
+				}
+
+				> .-time {
+					text-align: center;
+					background-color: $cyberpro-primary-dark;
+					padding: 0.25rem;
+					text-shadow: 0px 0px 0px;
+					color: black;
+					font-size: 21px;
+					letter-spacing: 2px;
+				}
+
+				> .-info {
 					display: flex;
+					justify-content: center;
 					align-items: center;
+					padding: 0.5rem;
 
-					// Name
-					> *:first-child {
-						margin: 0 2rem;
+					> .-team {
+						display: flex;
+						align-items: center;
+
+						> div:first-child {
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							flex-direction: column;
+							width: 14rem;
+							position: relative;
+							margin-top: 1.5rem;
+
+							// Name
+							> div:first-child {
+								position: absolute;
+								text-align: center;
+								top: -1.5rem;
+							}
+
+							// Logo
+							> div:last-child {
+								height: 3rem;
+								width: 4rem;
+								background-position: center;
+								background-repeat: no-repeat;
+								background-size: contain;
+							}
+						}
+
+						// Score
+						> *:nth-child(2) {
+							font-size: 175%;
+							margin: 0 1rem;
+
+							&.colored[data-diff="-1"] {
+								color: red;
+							}
+
+							&.colored[data-diff="1"] {
+								color: lime;
+							}
+						}
+
+						// Team 1
+						&:first-child {
+							margin-right: 1rem;
+						}
+
+						// Team 2
+						&:last-child {
+							margin-left: 1rem;
+							flex-direction: row-reverse;
+						}
 					}
 
-					// Logo
-					> img {
-						height: 4em;
-					}
-
-					// Score
-					> *:last-child {
-						font-size: 175%;
-						margin: 0 1rem;
+					> .-vs {
+						font-size: 300%;
+						font-weight: 100;
 					}
 				}
 
-				// Team 1
-				> .-team:first-child {
-					margin-right: 1rem;
-				}
+				> .-maps {
+					display: flex;
+					justify-content: center;
 
-				// Team 2
-				> .-team:last-child {
-					margin-left: 1rem;
-					flex-direction: row-reverse;
+					> * {
+						&:not(:last-child)::after {
+							content:"/";
+							margin: 0 1rem;
+							color: $cyberpro-primary-dark;
+							font-weight: bold;
+						}
+					}
 				}
 			}
 		}
@@ -241,12 +297,12 @@ body.csgo {
 
 	.scrollbar-inner>.scroll-element .scroll-bar, ::-webkit-scrollbar-thumb {
 		//border-radius:10px;
-		background:$cyberpro-primary-dark*0.9;
+		background: color.scale($cyberpro-primary-dark, $lightness: -10%);
 		//box-shadow:inset 0 0 3px rgba(0, 0, 0, 0.5);
 	}
 
 	.scrollbar-inner>.scroll-element .scroll-bar:hover, ::-webkit-scrollbar-thumb:hover {
-		background:$cyberpro-primary-dark*0.95;
+		background: color.scale($cyberpro-primary-dark, $lightness: -5%);
 	}
 
 	.scrollbar-inner>.scroll-element .scroll-bar:active, ::-webkit-scrollbar-thumb:active {
@@ -392,7 +448,7 @@ body.csgo {
 
 			> div:first-child {
 				background: $cyberpro-primary-dark;
-				letter-spacing: 0.25em;
+				letter-spacing: 2px;
 				font-weight: bold;
 				font-size: 125%;
 				color: black;
@@ -418,4 +474,65 @@ body.csgo {
 			}
 		}
 	}
+}
+
+#brackets {
+	.-section {
+		font-weight: bold;
+		font-size: 133%;
+	}
+}
+
+.reacket {
+	text-shadow: 0px 0px 0px!important;
+}
+
+.reacket-round-header {
+	text-align: center!important;
+	width: 21rem!important;
+	padding: 0.5rem 0!important;
+	font-size: 100%!important;
+	margin: 0!important;
+}
+
+.reacket .reacket-round-headers {
+		display: none!important;
+}
+
+.reacket-match .reacket-players {
+	width: 15rem!important;
+}
+
+.reacket-player .reacket-player-name {
+	color: white!important;
+	align-self: center!important;
+	font-size: 17px!important;
+}
+
+.reacket-player .reacket-player-seed {
+	color: #ccc!important;
+}
+
+.reacket-player .reacket-player-name, .reacket-player .reacket-player-seed, .reacket-player .reacket-player-score {
+	text-shadow: 2px 1px 1px black!important;
+}
+
+.reacket .reacket-rounds {
+	justify-content: center!important;
+}
+
+.reacket-connector {
+	width: 2rem!important;
+}
+
+.reacket-player {
+	background: #333!important;
+}
+
+.reacket-winner {
+	background-color: $cyberpro-primary-dark!important;
+}
+
+.reacket-player.reacket-highlighted {
+	background: red!important;
 }

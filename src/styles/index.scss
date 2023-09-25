@@ -8,8 +8,8 @@
 
 @font-face {
 		font-family: 'gohufontuni-14';
-		src: url('/gohufont-uni-14.woff2') format('woff2'),
-			 url('/gohufont-uni-14.woff') format('woff');
+		src: url('../../public/gohufont-uni-14.woff2') format('woff2'),
+			 url('../../public/gohufont-uni-14.woff') format('woff');
 		font-weight: normal;
 		font-style: normal;
 }
@@ -53,10 +53,14 @@ a {
 }
 
 a, a:active, a:focus {
-	color:red*0.9;
+	color: color.scale(red, $lightness: -10%);
+	text-decoration: none;
+}
+
+a:hover {
+	color:red;
 	text-decoration:none;
 }
-a:hover {color:red;text-decoration:none;}
 
 header {
 	top: 0px;
@@ -364,20 +368,20 @@ body .scrollbar-inner>.scroll-element .scroll-element_track, body ::-webkit-scro
 
 .scrollbar-inner>.scroll-element .scroll-bar, ::-webkit-scrollbar-thumb {
 	//border-radius:10px;
-	background:white*0.9;
+	background: color.scale(white, $lightness: -10%);
 	//box-shadow:inset 0 0 3px rgba(0, 0, 0, 0.5);
 }
 
 .scrollbar-inner>.scroll-element .scroll-bar:hover, ::-webkit-scrollbar-thumb:hover {
-	background:white*0.95;
+	background: color.scale(white, $lightness: -5%);
 }
 
 .scrollbar-inner>.scroll-element .scroll-bar:active, ::-webkit-scrollbar-thumb:active {
-	background:white;
+	background: white;
 }
 
 ::-webkit-scrollbar-button:start, ::-webkit-scrollbar-button:end {
-	display:none;
+	display: none;
 }
 
 @media only screen and (max-width: 1600px) {
@@ -448,7 +452,7 @@ body .scrollbar-inner>.scroll-element .scroll-element_track, body ::-webkit-scro
 	width:10.1vw;
 	height:5.5vw;
 	margin:1vw 0;
-	background-image:url("/img/pixel_desk.png");
+	background-image:url("../../public/img/pixel_desk.png");
 	background-size:cover;
 	@include filter(drop-shadow(0px 0px 1vw rgba(255, 0, 0, 0.4)));
 }
@@ -465,12 +469,12 @@ body .scrollbar-inner>.scroll-element .scroll-element_track, body ::-webkit-scro
 
 .pixel_desk > *:first-child {
 	left:10%;
-	background-image:url("/img/stream/head1.png");
+	background-image:url("../../public/img/stream/head1.png");
 }
 
 .pixel_desk > *:last-child {
 	right:10%;
-	background-image:url("/img/stream/head2.png");
+	background-image:url("../../public/img/stream/head2.png");
 	animation-delay: 0.25s;
 }
 

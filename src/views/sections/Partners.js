@@ -1,6 +1,6 @@
-import React from 'react'
-
-export default () => <section id="partners">
-	<h1>Partners</h1>
-	<a href="//overman.dev" target="_blank"><img src="/img/logo_overman.png" /></a>
-</section>
+export default function Partners() {
+	return <section id="partners">
+		<h1>Partners</h1>
+		<a href="//overman.dev" target="_blank" rel="noreferrer"><img src="/img/logo_overman.png" alt="" /></a>
+	</section>
+}

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-const { GoogleSpreadsheet } = require('google-spreadsheet')
+/*import { useState, useEffect } from 'react'
+import { GoogleSpreadsheet } from 'google-spreadsheet'
 
 const API_KEY = 'AIzaSyBtfuI3P5pz0oLrrPU80nLcx-VILq2zxpQ'
 const SHEET_ID = '173dYVjjIpCNphiC2tCL_p0ykk4Pd89UtJxsB6O8R7fs'
@@ -10,16 +10,20 @@ function getTeamIcon(teamname) {
 	teamname = teamname ?? ''
 	teamname = teamname.replace(/[`\s-]/g, '_')
 	teamname = teamname.toLowerCase()
-	return teamname + '.png?1'
+	return teamname + '.png'
+}*/
+
+function clamp(val, min, max) {
+	if (val < min) val = min
+	if (val > max) val = max
+	return val
 }
 
-export default () => {
-	const [schedule, setSchedule] = useState([])
+export default function Schedule() {
+	const schedule = [] //const [schedule, setSchedule] = useState([])
 
-	useEffect(() => {
+	/*useEffect(() => {
 		async function fetchData() {
-			console.log('Fetching data')
-			// spreadsheet key is the long id in the sheets URL
 			const doc = new GoogleSpreadsheet(SHEET_ID)
 			doc.useApiKey(API_KEY)
 
@@ -34,7 +38,7 @@ export default () => {
 					break
 
 				const maps = []
-				for (let c = 5; c < 20; ++c) {
+				for (let c = 6; c < 20; ++c) {
 					const map = schedSheet.getCell(row, c).value
 					if (map)
 						maps.push(map)
@@ -48,6 +52,7 @@ export default () => {
 					teamName2: schedSheet.getCell(row, 2).value,
 					teamScore1: schedSheet.getCell(row, 3).value,
 					teamScore2: schedSheet.getCell(row, 4).value,
+					stage: schedSheet.getCell(row, 5).value,
 					maps,
 				}
 
@@ -56,37 +61,50 @@ export default () => {
 
 				sched.push(schedItem)
 			}
+			sched.reverse()
 			setSchedule(sched)
 		}
 
 		fetchData()
 		const interval = setInterval(fetchData, UPDATE_INTERVAL)
 		return () => void clearInterval(interval)
-	}, [])
+	}, [])*/
 
 	return <section id="schedule">
 		<h1>Schedule</h1>
-		{schedule.map((match, i) =>
-			<div key={i}>
-				<div className="-time">{match.startTime}</div>
-				<div className="-info">
-					<div className="-team">
-						<div>{match.teamName1}</div>
-						<img src={match.teamLogo1} alt="Logo 1" />
-						<div>{match.teamScore1}</div>
+		<div className="-matches">
+			{schedule.map((match, i) => {
+				const pending = match.teamScore1 === 0 && match.teamScore2 === 0
+				const colored = match.maps.length <= 1
+					|| (match.teamScore1 + match.teamScore2) >= Math.floor(2 / 3 * match.maps.length)
+
+				return <div key={i}>
+					<div className="-time">{match.startTime}</div>
+					<div className="-info">
+						<div className="-team">
+							<div>
+								<div>{match.teamName1}</div>
+								<div style={{backgroundImage: 'url("' + match.teamLogo1 + '")'}} />
+							</div>
+							{!pending && <div className={colored ? 'colored' : ''} data-diff={clamp(match.teamScore1 - match.teamScore2, -1, 1)}>{match.teamScore1}</div>}
+						</div>
+						<div className="-vs">{pending ? 'vs' : ':'}</div>
+						<div className="-team">
+							<div>
+								<div>{match.teamName2}</div>
+								<div style={{backgroundImage: 'url("' + match.teamLogo2 + '")'}} />
+							</div>
+							{!pending && <div className={colored ? 'colored' : ''} data-diff={clamp(match.teamScore2 - match.teamScore1, -1, 1)}>{match.teamScore2}</div>}
+						</div>
 					</div>
-					<div className="-team">
-						<div>{match.teamName2}</div>
-						<img src={match.teamLogo2} alt="Logo 2" />
-						<div>{match.teamScore2}</div>
+					<div className="-stage">{match.stage} BO{match.maps.length}</div>
+					<div className="-maps">
+						{match.maps.map((map, j) =>
+							<div key={j}>{map}</div>
+						)}
 					</div>
 				</div>
-				<div>
-					{match.maps.map((map, j) =>
-						<div key={j}>{map}</div>
-					)}
-				</div>
-			</div>
-		)}
+			})}
+		</div>
 	</section>
 }

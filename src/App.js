@@ -1,9 +1,9 @@
-import React from 'react'
-import Router from 'Router'
+import AppRouter from 'AppRouter'
 import Header from 'common/Header'
 
-export default () =>
-<>
-	<Header />
-	<Router />
-</>
+export default function App() {
+	return <>
+		<Header />
+		<AppRouter />
+	</>
+}
